@@ -64,7 +64,7 @@ export function ResultsSection({ election, candidates, voters }: ResultsSectionP
   }
 
   // Para 3 o menos opciones, mostrar barras horizontales
-  if (candidates.length <= 3) {
+  if (candidates.length <= 4) {
     return (
       <Card>
         <CardHeader>
