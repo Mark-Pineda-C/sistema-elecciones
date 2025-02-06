@@ -24,6 +24,7 @@ import { api } from "../../convex/_generated/api";
 import type { Id } from "../../convex/_generated/dataModel";
 import toast from "react-hot-toast";
 import { Checkbox } from "./ui/checkbox";
+import { DateTimePicker } from "./ui/date-time";
 
 interface EditElectionProps {
   election: {
@@ -101,7 +102,7 @@ export function EditElection({ election }: EditElectionProps) {
         </div>
       </DialogTrigger>
 
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent className="sm:max-w-[475px]">
         <form action={mutate} className="gap-4 flex flex-col">
           <input type="hidden" name="startDate" defaultValue={formData.startDate?.getTime()} />
           <input type="hidden" name="endDate" defaultValue={formData.endDate?.getTime()} />
@@ -116,64 +117,18 @@ export function EditElection({ election }: EditElectionProps) {
               <Input id="name" placeholder="Nombre de la Elección" name="name" defaultValue={election.name} />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="startDate">Fecha de Inicio</Label>
-              <Popover>
-                <PopoverTrigger asChild>
-                  <Button
-                    variant={"outline"}
-                    className={cn(
-                      "w-full justify-start text-left font-normal",
-                      !formData.startDate && "text-muted-foreground",
-                    )}
-                  >
-                    <CalendarIcon className="mr-2 h-4 w-4" />
-                    {formData.startDate ? (
-                      format(formData.startDate, "PPP", { locale: es })
-                    ) : (
-                      <span>Seleccionar fecha</span>
-                    )}
-                  </Button>
-                </PopoverTrigger>
-                <PopoverContent className="w-auto p-0">
-                  <Calendar
-                    mode="single"
-                    selected={formData.startDate}
-                    onSelect={(date) => setFormData({ ...formData, startDate: date! })}
-                    initialFocus
-                    locale={es}
-                  />
-                </PopoverContent>
-              </Popover>
+              <Label>Fecha y hora de inicio</Label>
+              <DateTimePicker
+                value={formData.startDate}
+                onChange={(date) => setFormData({ ...formData, startDate: date! })}
+              />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="endDate">Fecha de Finalización</Label>
-              <Popover>
-                <PopoverTrigger asChild>
-                  <Button
-                    variant={"outline"}
-                    className={cn(
-                      "w-full justify-start text-left font-normal",
-                      !formData.endDate && "text-muted-foreground",
-                    )}
-                  >
-                    <CalendarIcon className="mr-2 h-4 w-4" />
-                    {formData.endDate ? (
-                      format(formData.endDate, "PPP", { locale: es })
-                    ) : (
-                      <span>Seleccionar fecha</span>
-                    )}
-                  </Button>
-                </PopoverTrigger>
-                <PopoverContent className="w-auto p-0">
-                  <Calendar
-                    mode="single"
-                    selected={formData.endDate}
-                    onSelect={(date) => setFormData({ ...formData, endDate: date! })}
-                    initialFocus
-                    locale={es}
-                  />
-                </PopoverContent>
-              </Popover>
+              <Label>Fecha y hora de finalización</Label>
+              <DateTimePicker
+                value={formData.endDate}
+                onChange={(date) => setFormData({ ...formData, endDate: date! })}
+              />
             </div>
             <div className="flex items-center space-x-2">
               <Checkbox
